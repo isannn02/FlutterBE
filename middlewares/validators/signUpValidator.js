@@ -7,25 +7,25 @@ exports.signUpValidator = async (req, res, next) => {
     const errors = [];
 
     if (validator.isEmpty(req.body.name)) {
-      errors.push("Please input your first name");
+      errors.push("Silahkan isi nama");
     }
     if (validator.isEmpty(req.body.user_name)) {
-      errors.push("Please input your user name ");
+      errors.push("Silahkan isi User Name ");
     }
     const checkUserName = await user.findOne({
       where: {
-        email: req.body.user_name,
+        user_name: req.body.user_name,
       },
     });
 
-    // if (checkUserName != null) {
-    //   errors.push("Cannot register, user name was registered");
-    // }
+    if (checkUserName != null) {
+      errors.push("Tidak dapat mendaftar user name sudah ada");
+    }
     // if (validator.isEmpty(req.body.last_name)) {
     //   errors.push("Please input your last name");
     // }
     if (!validator.isEmail(req.body.email)) {
-      errors.push("Email cannot be empty");
+      errors.push("Email tidak boleh kosong");
     }
 
     const checkEmail = await user.findOne({
@@ -35,12 +35,12 @@ exports.signUpValidator = async (req, res, next) => {
     });
 
     if (checkEmail != null) {
-      errors.push("Cannot register, email was registered");
+      errors.push("Email sudah terdaftar");
     }
 
     if (!validator.isStrongPassword(req.body.password)) {
       errors.push(
-        "Password must has at least 8 characters that include at least 1 lowercase character, 1 uppercase characters, and 1 number"
+        "Password harus 8 karakter terdiri minimal 1 hurup besar, 1 angka dan 1 simbol karakter"
       );
     }
     
@@ -52,6 +52,6 @@ exports.signUpValidator = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error, "ini errornya");
-    res.status(401).json({ success: false, errors: ["Bad request"] });
+    res.status(401).json({ success: false, errors: ["Masukan Data diri yang sesuai"] });
   }
 };

@@ -32,7 +32,7 @@ class User {
       if (password != repassword) {
         return res.status(401).json({
           success: false,
-          errors: ["Password must be same"],
+          errors: ["Password dan repassword harus di isi sama"],
         });
       }
 
@@ -73,6 +73,21 @@ class User {
   async updateUser(req, res, next) {
     try {
       const userId = req.userData.id;
+      const checkUserName=req.userData.user_name
+      const checkEmail=req.userData.email
+      if (checkUserName == req.body.user_name) {
+        return res.status(401).json({
+          success: false,
+          errors: ["User name sudah ada"],
+        });
+      }
+      if (checkEmail == req.body.email) {
+        return res.status(401).json({
+          success: false,
+          errors: ["Email sudah ada"],
+        });
+      }
+
 
       await user.update(req.body, {
         where: { id: +userId },
@@ -133,7 +148,7 @@ class User {
       if (loginUser == null) {
         return res.status(401).json({
           success: false,
-          errors: ["Please Input the correct email and password"],
+          errors: ["Masukan user name dan password yang benar"],
         });
       }
 
@@ -143,7 +158,7 @@ class User {
       if (!compareResult) {
         return res.status(401).json({
           success: false,
-          errors: ["Please input the correct email and password"],
+          errors: ["Masukan user name dan password yang benar"],
         });
       }
 
@@ -163,6 +178,39 @@ class User {
       res
         .status(500)
         .json({ success: false, errors: ["Internal Server Error"] });
+    }
+  }
+  async updatePassword(req, res, next) {
+    try {
+      const userId = req.userData.id;
+      const { password, confirmPassword } = req.body;
+      const hashPassword = encodePin(password);
+
+      if (password != confirmPassword) {
+        return res.status(400).json({
+          success: false,
+          errors: ["Password and Confirm Password not match"],
+        });
+      }
+
+      await user.update(
+        {
+          password: hashPassword,
+        },
+        {
+          where: { id: +userId },
+        }
+      );
+
+      const data = await user.findOne({
+        where: {
+          id: +userId,
+        },
+      });
+
+      res.status(201).json({ success: true, message: ["Success Update Password"] });
+    } catch (error) {
+      res.status(500).json({ success: false, errors: ["Internal Server Error"] });
     }
   }
 }
