@@ -1,9 +1,9 @@
 const { user } = require("../models");
 const { createToken, encodePin, compare } = require("../utils/index");
-const sequelize = require("sequelize");
+// const sequelize = require("sequelize");
 
-const path = require("path");
-const crypto = require("crypto");
+// const path = require("path");
+// const crypto = require("crypto");
 
 class User {
   async getDetailUser(req, res, next) {

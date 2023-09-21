@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
@@ -23,7 +23,7 @@ cloudinary.config({
 });
 
 app.get("/", (req, res) => {
-  res.send("Welcome To fitnes");
+  res.redirect('https://gerryajie.github.io/');
 });
 
 app.use(routes);
