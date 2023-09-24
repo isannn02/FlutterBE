@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary").v2;
 const cors = require("cors");
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 
 const routes = require("./routes/index");
 const errorHandler = require("./middlewares/errorHandler/errorHandler");
