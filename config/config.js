@@ -1,13 +1,11 @@
-// require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
-// require('dotenv').config();
 
 module.exports = {
   development: {
-    username: "fluw7431_gerry",
-    password:"Banten123",
-    database: "fluw7431_flutter",
-    host: "localhost",
-    dialect: "mysql",
+    username: 'root',
+    password: '',
+    database: 'flutter',
+    host: 'localhost',
+    dialect: 'mysql',
   
   },
   test: {
