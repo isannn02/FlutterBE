@@ -54,7 +54,7 @@ class User {
           exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
         },
       });
-
+console.log(data,'ini data yang masuk dan disimpan di db')
       const payload = {
         id: data.dataValues.id,
         email: data.dataValues.email,
@@ -208,7 +208,7 @@ class User {
         },
       });
 
-      res.status(201).json({ success: true, message: ["Success Update Password"] });
+      res.status(201).json({ success: true, message: ["Sukses update password"] });
     } catch (error) {
       res.status(500).json({ success: false, errors: ["Internal Server Error"] });
     }

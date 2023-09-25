@@ -1,11 +1,10 @@
 // require("dotenv").config();
 const express = require("express");
 const fileUpload = require("express-fileupload");
-const cloudinary = require("cloudinary").v2;
 const cors = require("cors");
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 
 const routes = require("./routes/index");
 const errorHandler = require("./middlewares/errorHandler/errorHandler");
@@ -16,14 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(express.static("public"));
 
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEYCLOUD,
-  api_secret: process.env.API_SECRET,
-});
+
 
 app.get("/", (req, res) => {
-  res.redirect('https://gerryajie.github.io/');
+  res.send('Body Goals');
 });
 
 app.use(routes);

@@ -24,7 +24,7 @@ exports.authentication = async (req, res, next) => {
       res.status(401).json({
         success: false,
         errors:
-          "You must signin first, because you don't have permission to access.",
+          "Harap sign in dulu, kamu tidak dizinkan untuk access",
       });
     }
   } catch (error) {
