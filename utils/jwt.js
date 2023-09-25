@@ -1,6 +1,8 @@
 // require("dotenv").config();
 const jwt = require("jsonwebtoken")
-const SECRET="gerryajie"
+// let str="gerryajie"
+// let SECRET= btoa(str)
+const SECRET ="gerryajie"
 
 const createToken = (payload) => {
   try {
