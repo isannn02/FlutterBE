@@ -1,11 +1,11 @@
 
 module.exports = {
   development: {
-    username: 'root',
-    password: '',
-    database: 'flutter',
-    host: 'localhost',
-    dialect: 'mysql',
+    username: "root",
+    password:"",
+    database: "flutter",
+    host: "localhost",
+    dialect: "mysql",
   
   },
   test: {
