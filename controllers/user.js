@@ -4,6 +4,9 @@ const { createToken, encodePin, compare } = require("../utils/index");
 
 // const path = require("path");
 // const crypto = require("crypto");
+const randomstring = require('randomstring')
+const sendMail = require('../helpers/sendMail')
+
 
 class User {
   async getDetailUser(req, res, next) {
@@ -28,22 +31,32 @@ class User {
 
   async createUser(req, res, next) {
     try {
-      const {user_name, email, name, no_hp, password,repassword } = req.body;
+      const { user_name, email, name, no_hp, password, repassword } = req.body;
       if (password != repassword) {
         return res.status(401).json({
           success: false,
           errors: ["Password dan repassword harus di isi sama"],
         });
       }
+      let mailSubject = 'Mail verification'
+      const randomToken = randomstring.generate()
+
+      console.log(randomToken, "randomtoken")
+      let content = '<p>Hii ' + req.body.name + ',Silahkan <a href="http://127.0.0.1:8000/mail?token=' + randomToken + '">verifikasi </a> Email anda'
+      sendMail(req.body.email, mailSubject, content)
+
+
+
 
       const hashPassword = encodePin(password);
 
       await user.create({
-        user_name:user_name,
+        user_name: user_name,
         email: email,
         name: name,
         no_hp: no_hp,
         password: hashPassword,
+        token: randomToken,
       });
 
       const data = await user.findOne({
@@ -54,7 +67,7 @@ class User {
           exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
         },
       });
-console.log(data,'ini data yang masuk dan disimpan di db')
+      // console.log(data, 'ini data yang masuk dan disimpan di db')
       const payload = {
         id: data.dataValues.id,
         email: data.dataValues.email,
@@ -73,8 +86,8 @@ console.log(data,'ini data yang masuk dan disimpan di db')
   async updateUser(req, res, next) {
     try {
       const userId = req.userData.id;
-      const checkUserName=req.userData.user_name
-      const checkEmail=req.userData.email
+      const checkUserName = req.userData.user_name
+      const checkEmail = req.userData.email
       if (checkUserName == req.body.user_name) {
         return res.status(401).json({
           success: false,
@@ -152,6 +165,13 @@ console.log(data,'ini data yang masuk dan disimpan di db')
         });
       }
 
+      if (loginUser != null && loginUser.dataValues.is_verify == 0) {
+        return res.status(401).json({
+          success: false,
+          errors: ["Silahkan cek email untuk memverifikasi"],
+        });
+      }
+
       const hashPass = loginUser.dataValues.password;
       const compareResult = compare(password, hashPass);
 
@@ -165,8 +185,9 @@ console.log(data,'ini data yang masuk dan disimpan di db')
       const payload = {
         id: loginUser.dataValues.id,
         user_name: loginUser.dataValues.user_name,
-        name:loginUser.dataValues.name,
-        email:loginUser.dataValues.email,
+        name: loginUser.dataValues.name,
+        email: loginUser.dataValues.email,
+        role: loginUser.dataValues.role,
       };
       const token = createToken(payload);
       res.status(200).json({

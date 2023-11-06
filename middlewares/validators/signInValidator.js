@@ -38,3 +38,15 @@ exports.changePassword = async (req, res, next) => {
     next()
   } catch (error) { res.status(500).json({ success: false, errors: ['Internal server error'] }) }
 }
+
+exports.forgetPassword = async (req, res, next) => {
+  try {
+    const errors = [];
+    if (!validator.isEmail(req.body.email)) {
+      errors.push("Email tidak boleh kosong");
+    }
+
+
+    next()
+  } catch (error) { res.status(500).json({ success: false, errors: ['Internal server error'] }) }
+}

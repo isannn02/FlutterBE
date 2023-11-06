@@ -36,6 +36,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      role: {
+        type: Sequelize.STRING,     
+        defaultValue:"user"
+      },
+      token: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      is_verify: {
+        type: Sequelize.INTEGER,
+        defaultValue:0
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

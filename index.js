@@ -7,6 +7,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const routes = require("./routes/index");
+const webRouter=require('./routes/webRoute')
 const errorHandler = require("./middlewares/errorHandler/errorHandler");
 
 app.use(cors());
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(routes);
+app.use('/',webRouter)
 
 app.get("*", (req, res, next) => {
   res.send("404 Page Not Found");
