@@ -1,7 +1,7 @@
 const {  events, user } = require("../models");
 
 
-class Comments {
+class Events {
     static async getAllEvent(req, res, next) {
         try {
             const data = await events.findAll({
@@ -158,4 +158,4 @@ class Comments {
     // }
 }
 
-module.exports = Comments;
+module.exports = Events;
