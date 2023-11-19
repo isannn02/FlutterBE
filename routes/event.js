@@ -3,17 +3,20 @@ const express = require("express");
 
 const { authentication } = require("../middlewares/Auth/authentication");
 const {
-    createComment,
-    getAllComments
+    createEvent,
+    getAllEvent
 
-  } = require("../controllers/comment");
+  } = require("../controllers/event");
+  const {
+    createOrUpadateEventValidator
+  } = require("../middlewares/validators/event");
 
 
 
 const router = express.Router();
 
-router.get("/all",authentication, getAllComments);
-router.post("/create",authentication, createComment);
+router.get("/all",authentication, getAllEvent);
+router.post("/create",authentication,createOrUpadateEventValidator, createEvent);
 
 
 

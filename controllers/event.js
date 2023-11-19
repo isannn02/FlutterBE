@@ -1,10 +1,10 @@
-const { comments, user } = require("../models");
+const {  events, user } = require("../models");
 
 
 class Comments {
-    static async getAllComments(req, res, next) {
+    static async getAllEvent(req, res, next) {
         try {
-            const data = await comments.findAll({
+            const data = await events.findAll({
                 attributes: {
                     exclude: ["updatedAt", "deletedAt"],
                 },
@@ -93,35 +93,36 @@ class Comments {
     //     }
     // }
 
-    static async createComment(req, res, next) {
+    static async createEvent(req, res, next) {
         try {
             const userId = req.userData.id;
             // console.log(userId,"user idnya")
-            const newData = await comments.create({
-                id:req.body.id,
+            await events.create({
+             
                 userId:userId,
-                comment:req.body.comment,
-                rating:req.body.rating
+                title:req.body.title,
+                photoEvent:req.body.photoEvent,
+                detail:req.body.detail
             });
             // console.log(newData,"new data")
 
-            const data = await comments.findOne({
-                where: {
-                    id: newData.id,
-                },
+            // const data = await comments.findOne({
+            //     where: {
+            //         id: newData.id,
+            //     },
 
-                include: [
-                    {
-                        model: user,
-                        attributes: ["id", "name"],
-                    },
+            //     include: [
+            //         {
+            //             model: user,
+            //             attributes: ["id", "name"],
+            //         },
 
-                ],
-            });
+            //     ],
+            // });
 
             res.status(201).json({
-                data: data,
-                message: ["Anda berhasil menambahkan komen"],
+          
+                message: ["Anda berhasil menambahkan event"],
             });
         } catch (error) {
             console.log(error);
