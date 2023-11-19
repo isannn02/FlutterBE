@@ -14,7 +14,7 @@ exports.authentication = async (req, res, next) => {
           user_name: user_name,
         },
       });
-      console.log(loginUser,"ini loginnya")
+      // console.log(loginUser,"ini loginnya")
 
       if (loginUser) {
         req.userData = payload;

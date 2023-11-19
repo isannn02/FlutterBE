@@ -20,19 +20,27 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },  
-      jenis_kelamin: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      tinggi_badan: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       no_hp: {
         type: Sequelize.STRING,
         allowNull: true,
       },
       password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      gender: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      height: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      recent_weight: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      goals_weight: {
         type: Sequelize.STRING,
         allowNull: false,
       },

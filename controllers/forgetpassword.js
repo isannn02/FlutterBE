@@ -32,8 +32,13 @@ const forgetPassword = async (req, res) => {
             // return res.render('mailverification')
             let mailSubject = 'Forget Password';
             const randomstringa = randomstring.generate();
+            // let content = '<p>Hai ,' + result.dataValues.name + '\
+            // Silahkan <a href="https://api.flutterbedomain.my.id/forgetpassword?token='+ randomstringa + '">Klik Disini</a> Untuk reset password anda</p>\
+            // ';
+
+            // localhost
             let content = '<p>Hai ,' + result.dataValues.name + '\
-            Silahkan <a href="http://127.0.0.1:8000/forgetpassword?token='+ randomstringa + '">Klik Disini</a> Untuk reset password anda</p>\
+            Silahkan <a href="http://localhost:8080/forgetpassword?token='+ randomstringa + '">Klik Disini</a> Untuk reset password anda</p>\
             ';
 
 

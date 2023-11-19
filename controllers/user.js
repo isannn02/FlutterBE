@@ -31,7 +31,7 @@ class User {
 
   async createUser(req, res, next) {
     try {
-      const { user_name, email, name, no_hp, password, repassword } = req.body;
+      const { user_name, email, name, no_hp, password, repassword ,gender,height,recent_weight,goals_weight} = req.body;
       if (password != repassword) {
         return res.status(401).json({
           success: false,
@@ -41,9 +41,13 @@ class User {
       let mailSubject = 'Mail verification'
       const randomToken = randomstring.generate()
 
-      console.log(randomToken, "randomtoken")
-      let content = '<p>Hii ' + req.body.name + ',Silahkan <a href="http://127.0.0.1:8000/mail?token=' + randomToken + '">verifikasi </a> Email anda'
+      // console.log(randomToken, "randomtoken")
+      // let content = '<p>Hii ' + req.body.name + ',Silahkan <a href=https://api.flutterbedomain.my.id/mail?token=' + randomToken + '>verifikasi </a> Email anda'
+      // sendMail(req.body.email, mailSubject, content)
+
+      let content = '<p>Hii ' + req.body.name + ',Silahkan <a href=http://localhost:8080/mail?token=' + randomToken + '>verifikasi </a> Email anda'
       sendMail(req.body.email, mailSubject, content)
+
 
 
 
@@ -55,6 +59,10 @@ class User {
         email: email,
         name: name,
         no_hp: no_hp,
+        gender: gender,
+        height: height,
+        recent_weight: recent_weight,
+        goals_weight: goals_weight,
         password: hashPassword,
         token: randomToken,
       });
@@ -74,7 +82,7 @@ class User {
       };
       const token = createToken(payload);
 
-      res.status(200).json({ success: true, data: data });
+      res.status(200).json({ success: true, message: "Silahkan Verifikasi email Anda" });
     } catch (error) {
       console.log(error);
       res

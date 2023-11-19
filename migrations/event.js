@@ -1,29 +1,31 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("products", {
+    await queryInterface.createTable("events", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      kode_produk: {
-        allowNull: true,
+      title: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
-      nama_produk: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
-      qty: {
-        allowNull: true,
+      userId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
-      image_produk: {
-        allowNull: true,
+
+      photoEvent: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
+      detail: {
+        allowNull: false,
+        type: Sequelize.STRING(3000),
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -37,8 +39,23 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+
+    // Make userId to be foreign key
+    await queryInterface.addConstraint("events", {
+      fields: ["userId"],
+      type: "foreign key",
+      name: "custom_fkey_userId",
+      references: {
+        //Required field
+        table: "users",
+        field: "id",
+      },
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    });
+
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("products");
+    await queryInterface.dropTable("events");
   },
 };
