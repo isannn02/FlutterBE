@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       paranoid: true,
       timestamps: true,
-      modelName: "password_reset",
+      modelName: "nutritions",
     }
   );
   return nutrition;

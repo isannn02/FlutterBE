@@ -41,12 +41,12 @@ class User {
       let mailSubject = 'Mail verification'
       const randomToken = randomstring.generate()
 
-      // console.log(randomToken, "randomtoken")
-      // let content = '<p>Hii ' + req.body.name + ',Silahkan <a href=https://api.flutterbedomain.my.id/mail?token=' + randomToken + '>verifikasi </a> Email anda'
-      // sendMail(req.body.email, mailSubject, content)
-
-      let content = '<p>Hii ' + req.body.name + ',Silahkan <a href=http://localhost:8080/mail?token=' + randomToken + '>verifikasi </a> Email anda'
+      console.log(randomToken, "randomtoken")
+      let content = '<p>Hii ' + req.body.name + ',Silahkan <a href=https://api.flutterbedomain.my.id/mail?token=' + randomToken + '>verifikasi </a> Email anda'
       sendMail(req.body.email, mailSubject, content)
+
+      // let content = '<p>Hii ' + req.body.name + ',Silahkan <a href=http://localhost:8080/mail?token=' + randomToken + '>verifikasi </a> Email anda'
+      // sendMail(req.body.email, mailSubject, content)
 
 
 

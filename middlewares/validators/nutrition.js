@@ -4,24 +4,24 @@ const validator = require("validator");
 const { promisify } = require("util");
 
 // Make class of create or update event validatro
-exports.createOrUpadateEventValidator = async (req, res, next) => {
+exports.createOrUpadateNutritionValidator = async (req, res, next) => {
   try {
     const errors = [];
 
     //   Check input of title
-    if (validator.isEmpty(req.body.title, { ignore_whitespace: false })) {
-      errors.push("Silahkan isi title nya!");
+    if (validator.isEmpty(req.body.name, { ignore_whitespace: false })) {
+      errors.push("Silahkan Input Name!");
     }
 
     // Check for the image of event was upload or not
 
-    if (!(req.files && req.files.photoEvent)) {
-      errors.push("Gambar harus di unggah");
-    } else if (req.files.photoEvent) {
+    if (!(req.files && req.files.photo)) {
+      errors.push("Silahkan upload gambar");
+    } else if (req.files.photo) {
       // If image was uploaded
 
       // req.files.photoEvent is come from key (file) in postman
-      const file = req.files.photoEvent;
+      const file = req.files.photo;
 
       // Make sure image is photo
       if (!file.mimetype.startsWith("image")) {
@@ -30,7 +30,7 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
 
       // Check file size (max 1MB)
       if (file.size > 1000000) {
-        errors.push("tidak boleh lebih dari 1MB");
+        errors.push("Tidak boleh lebih dari 1MB");
       }
 
       // If error
@@ -48,27 +48,25 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       const move = promisify(file.mv);
 
       // Upload image to /public/images
-      await move(`./public/images/events/${file.name}`);
+      await move(`./public/images/nutrition/${file.name}`);
 
       // assign req.body.image with file.name
-      req.body.photoEvent = `https://api.flutterbedomain.my.id/images/events/${file.name}`;
-    }
-
-    if (errors.length > 0) {
-      return res.status(400).json({ errors: errors });
+      req.body.photo= `https://api.flutterbedomain.my.id/images/nutrition/${file.name}`;
     }
     if (
-      !validator.isLength(req.body.detail, {
-        min: 5,
-        max: 2000,
-      })
-    ) {
-      errors.push("link minimal 5 karakter!");
-    }
-
+        !validator.isLength(req.body.link, {
+          min: 5,
+          max: 2000,
+        })
+      ) {
+        errors.push("link minimal 5 karakter");
+      }
     if (errors.length > 0) {
       return res.status(400).json({ errors: errors });
     }
+
+
+
 
     next();
   } catch (error) {
