@@ -3,9 +3,11 @@ const express = require("express");
 
 const { authentication } = require("../middlewares/Auth/authentication");
 const {
-    createNutrition,
-    getAllNutrition,
-    updateNutrition
+  createNutritionCut,
+  createNutritionBulk,
+  getAllNutritionBulk,
+  getAllNutritionCut,
+  updateNutrition
 
   } = require("../controllers/nutrition");
   const {
@@ -19,9 +21,11 @@ const router = express.Router();
 
 
 router.put('/:id', authentication,createOrUpadateNutritionValidator,updateNutrition);
-router.get("/all",authentication, getAllNutrition);
+router.get("/all/bulk",authentication, getAllNutritionBulk);
+router.get("/all/cut",authentication, getAllNutritionCut);
 
-router.post("/create",authentication,createOrUpadateNutritionValidator, createNutrition);
+router.post("/create/bulk",authentication,createOrUpadateNutritionValidator, createNutritionBulk);
+router.post("/create/cut",authentication,createOrUpadateNutritionValidator, createNutritionCut);
 
 
 

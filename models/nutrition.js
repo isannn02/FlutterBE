@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       link:DataTypes.STRING,
       photo:DataTypes.STRING,
+      flag:DataTypes.STRING
   
       
     },

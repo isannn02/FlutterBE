@@ -2,9 +2,31 @@ const { nutritions} = require("../models");
 
 
 class Nutrition {
-    static async getAllNutrition(req, res, next) {
+    static async getAllNutritionBulk(req, res, next) {
         try {
             const data = await nutritions.findAll({
+                where:{flag:"bulk"},
+                attributes: {
+                    exclude: ["updatedAt", "deletedAt"],
+                },
+
+            });
+
+            if (data.length === 0) {
+                return res.status(404).json({ errors: ["Comment not found"] });
+            }
+
+            res.status(200).json({ data });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: ["Internal Server Error"] });
+        }
+    }
+
+    static async getAllNutritionCut(req, res, next) {
+        try {
+            const data = await nutritions.findAll({
+                where:{flag:"cut"},
                 attributes: {
                     exclude: ["updatedAt", "deletedAt"],
                 },
@@ -89,7 +111,7 @@ class Nutrition {
     //     }
     // }
 
-    static async createNutrition(req, res, next) {
+    static async createNutritionBulk(req, res, next) {
         try {
             const userId = req.userData.id;
             // console.log(userId,"user idnya")
@@ -98,7 +120,47 @@ class Nutrition {
 
                 name: req.body.name,
                 photo: req.body.photo,
-                link: req.body.link
+                link: req.body.link,
+                flag:"bulk"
+            });
+            // console.log(newData,"new data")
+
+            // const data = await comments.findOne({
+            //     where: {
+            //         id: newData.id,
+            //     },
+
+            //     include: [
+            //         {
+            //             model: user,
+            //             attributes: ["id", "name"],
+            //         },
+
+            //     ],
+            // });
+
+            res.status(201).json({
+
+                message: ["Anda berhasil menambahkan Nutritions"],
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: ["Internal Server Error"] });
+        }
+    }
+
+
+    static async createNutritionCut(req, res, next) {
+        try {
+            const userId = req.userData.id;
+            // console.log(userId,"user idnya")
+            await nutritions.create({
+
+
+                name: req.body.name,
+                photo: req.body.photo,
+                link: req.body.link,
+                flag:"bulk"
             });
             // console.log(newData,"new data")
 

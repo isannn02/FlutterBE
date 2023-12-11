@@ -130,6 +130,52 @@ class Events {
         }
     }
 
+    static async updateEvent(req, res, next) {
+        try {
+            // Comment Table Update Data
+
+          
+
+            const eventId = await events.findOne({
+                where: { id: req.params.id },
+            });
+          
+
+            // if (commentId.userId !== req.userData.id) {
+            //     return res
+            //         .status(401)
+            //         .json({ errors: ["You do not have permission to access this!"] });
+            // }
+
+            const updatedData = await events.update(req.body, {
+                where: {
+                    id: req.params.id,
+                },
+            });
+
+            // If no data updated
+            if (updatedData[0] === 0) {
+                return res.status(404).json({ errors: ["Event tidak di temukan"] });
+            }
+
+            // const updateComment = await comments.findOne(
+            //     {
+            //         eventId: req.body.eventId,
+            //         userId: req.userData.id,
+            //         comment: req.body.id,
+            //     },
+            //     { where: { id: req.params.id } }
+            // );
+            const data = await events.findOne({
+                where: { id: req.params.id },
+            });
+
+            res.status(201).json({ data, message: ["Sukses Update Event"] });
+        } catch (error) {
+            next(error);
+        }
+    }
+
     // static async deleteComment(req, res, next) {
     //     try {
     //         const deleteId = await comments.findOne({

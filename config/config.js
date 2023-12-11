@@ -8,9 +8,9 @@
 
 module.exports = {
   development: {
-    username: "root",
-    password:"",
-    database: "flutter",
+    username: "fluw7431_gerry",
+    password:"Bantenku12345",
+    database: "fluw7431_flutter",
     host: "localhost",
     dialect: "mysql",
   
